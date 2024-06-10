@@ -1,0 +1,89 @@
+---
+title: "Hola, ¡Quarto!"
+format: html
+---
+
+## Conoce Quarto
+
+Quarto le permite entrelazar contenido y código ejecutable en un documento acabado. Más información sobre Quarto en <https://quarto.org>.
+
+## Conoce a los pingüinos
+
+```{r}
+#| label: cargar-paquetes
+#| message: false
+
+library(tidyverse)
+library(palmerpenguins)
+```
+
+![](images/lter_penguins.png){style="float: right;" fig-alt="Three species of penguins: Chinstrap, Gentoo, Adelie." width="400"}
+
+El datasets `penguins` viene del paquete [**palmerpenguins**](https://allisonhorst.github.io/palmerpenguins "palmerpenguins R package") que contiene medidas de tamaño para `r nrow(penguins)` pingüinos de tres especies observadas en tres islas del archipiélago Palmer, Antártida.
+
+## Datos
+
+El paquete tine dos datasets.
+
+::: panel-tabset
+## `penguins_raw`
+
+Incluye observaciones de nidificación, datos sobre el tamaño de los pingüinos y mediciones isotópicas de muestras de sangre de pingüinos Adelia, barbijo y papúa adultos.
+
+```{r}
+glimpse(penguins_raw)
+```
+
+## `penguins`
+
+Subconjunto de penguins_raw, incluye medidas de la especie de pingüino, isla en el archipiélago de Palmer, tamaño (longitud de las aletas, masa corporal, dimensiones del pico) y sexo.
+
+```{r}
+glimpse(penguins)
+```
+:::
+
+## Un primer vistazo a los pingüinos
+
+El siguiente gráfico muestra la relación entre la longitud de las aletas y el pico de estos pingüinos.
+
+```{r}
+#| label: plot-penguins
+#| warning: false
+#| echo: true
+#| output-location: slide
+#| code-line-numbers: "|1-2|3|4|5-12|13"
+#| fig-alt: |
+#|  Diagrama de dispersión de la longitud del pico frente a 
+#|  la longitud de las aletas para tres especies de pingüinos. 
+#|  especies de pingüinos. La relación es positiva y 
+#|  moderadamente fuerte. Las tres especies se identifican  
+#|  con puntos de diferentes colores y formas, 
+#|  revelando tres grupos.
+
+ggplot(penguins, 
+       aes(x = flipper_length_mm, y = bill_length_mm)) +
+  geom_point(aes(color = species, shape = species)) +
+  scale_color_manual(values = c("darkorange", "purple", "cyan4")) +
+  labs(
+    title = "Flipper and bill length",
+    subtitle = "Dimensions for penguins at Palmer Station LTER",
+    x = "Flipper length (mm)", 
+    y = "Bill length (mm)",
+    color = "Penguin species", 
+    shape = "Penguin species"
+  ) +
+  theme_minimal()
+```
+
+## Una diapositiva con dos columnas
+
+::: columns
+::: {.column width="50%"}
+Columna 1
+:::
+
+::: {.column width="50%"}
+Columna 2
+:::
+:::

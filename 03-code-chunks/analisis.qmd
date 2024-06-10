@@ -1,0 +1,51 @@
+---
+title: "Análisis Pingüinos"
+format: html
+editor: visual
+---
+
+## Introducción
+
+Este documento ofrece un análisis directo del conocido conjunto de datos sobre pingüinos. Está diseñado para complementar el taller de [R-Ladies](https://rladies.org/).
+
+Se leer más sobre el conjunto de datos de pingüinos [aquí](https://allisonhorst.github.io/palmerpenguins/).
+
+¡Carguemos las bibliotecas antes de empezar!
+
+```{r}
+#| message: false
+#| warning: false
+# cargar el tidyverse
+library(tidyverse)
+library(datos)
+```
+
+## Cargando datos
+
+Carguemos los datos, junto con algunas funciones disponibles en `functions.R`.
+
+```{r}
+# Funciones
+source("funciones.R")
+
+# Leer el conjunto de datos limpios
+datos <- pinguinos
+```
+
+## Longitud del pico
+
+Ahora, vamos a hacer algunos análisis descriptivos sobre la longitud del pico, incluyendo estadísticas resumidas y gráficos:
+
+```{r}
+# Resumen
+summary(datos)
+
+# Calcular la longitud media del pico para diferentes especies e islas usando dplyr
+datos %>%
+  filter(especie == "Adelia") %>%
+  group_by(isla) %>%
+  summarize(media_largo_pico = round(mean(largo_pico_mm, na.rm = TRUE), 2))
+
+# Utilice la función en funciones.R
+crear_scatterplot(datos, "Adelia", "Torgersen")
+```

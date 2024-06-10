@@ -1,0 +1,94 @@
+---
+title: "Exploring the Simpson's Paradox Within the Penguin datosset"
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    toc-title: " "
+    number-sections: true
+editor: source
+fig-cap-location: margin
+---
+
+## Introducción
+
+Este documento ofrece un análisis directo del conocido conjunto de datos sobre pingüinos. Está diseñado para complementar el taller de [R-Ladies](https://rladies.org/).
+
+Se leer más sobre el conjunto de datos de pingüinos [aquí](https://allisonhorst.github.io/palmerpenguins/).
+
+¡Carguemos las bibliotecas antes de empezar!
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(hrbrthemes)    # ipsum theme para ggplot2
+library(DT)            # tablas interactivas
+library(knitr)         # tabla estática con la función kable()
+library(datos)
+library(plotly)
+```
+
+## Cargando datos
+
+Carguemos los datos, junto con algunas funciones disponibles en `functions.R`.
+
+```{r}
+# Funciones
+source("funciones.R")
+
+# Leer el conjunto de datos limpios
+datos <- pinguinos
+```
+
+![Explicación de la medida del pico de los pingüinos](images/culmen_depth.png){width = 300}
+
+En caso de que se pregunte cómo es el conjunto de datos original, aquí hay una versión que permite realizar búsquedas, realizada con el paquete `DT`:
+
+```{r}
+library(DT)
+datatable(datos, options = list(pageLength = 5), filter = "top")
+```
+
+## Longitud del pico
+
+Ahora, vamos a hacer algunos análisis descriptivos sobre la longitud del pico, incluyendo estadísticas resumidas y gráficos:
+
+```{r}
+# Resumen
+summary(datos)
+
+p <- datos %>%   
+   ggplot(aes(x = largo_pico_mm, y = alto_pico_mm)) +
+   geom_point(color = "#69b3a2") +
+   labs(x = "Largo pico (mm)",
+   y = "Alto pico (mm)",
+   title = paste("¿Relación sorpresiva?")) +
+   theme_ipsum()
+
+ggplotly(p)
+```
+
+$${\displaystyle Media={\frac {1}{n}}\sum _{i=1}^{n}a_{i}={\frac {a_{1}+a_{2}+\cdots +a_{n}}{n}}}$$
+
+También es interesante observar que la `largo_pico_mm` a y la `alto_pico_mm` son bastante diferentes de una especie a otra. Esto se resume en las 2 tablas siguientes:
+
+```{r}
+#| layout-ncol: 2
+
+library(tidyverse)
+
+largo_pico_por_especie <- datos %>%
+ group_by(especie) %>% 
+  summarise(media_largo_pico = mean(largo_pico_mm, na.rm = TRUE))
+
+kable(largo_pico_por_especie)
+
+alto_pico_por_especie <- datos %>%
+ group_by(especie) %>% 
+  summarise(media_alto_pico = mean(alto_pico_mm, na.rm = TRUE))
+
+kable(alto_pico_por_especie)
+```

@@ -1,0 +1,76 @@
+---
+title: "Ejercicios"
+author: "Paula Pereda Suárez"
+format: html
+editor: visual
+---
+
+pkg_list <- c(
+  "tidyverse", "hrbrthemes", "DT", "knitr", 
+  "datos",  "plotly", "quarto")
+  
+install.packages(pkg_list)
+
+## Ejercicio 1 (01-primer-reporte)
+
+-   Crear un directorio en la computadora que se llame "Quarto"
+-   Crear un proyecto de RStudio en la carpeta "Quarto", el nombre del proyecto también debe ser "Quarto".
+-   Convertir el script "analisis.R" en un archivo .qmd con el YAML metadata: + Título del documento: Primer documento en Quarto + Autor: Nombre y apellido
+-   Compilar (⮕ Render) y ver que el documento salga bien en HTML.
+
+## Ejercicio 2 (02-format-text-con-markdown)
+
+-   Añade un enlace en algún lugar para explicar de [dónde procede originalmente](https://allisonhorst.github.io/palmerpenguins/) el conjunto de datos.
+-   Intenta resaltar al menos 3 palabras utilizando negrita. Intenta jugar con el resto de características de markdown descritas anteriormente.
+-   Divide tu documento en 3 secciones, cada una de las cuales empiece con un título (introducción, carga de datos, análisis descriptivo).
+-   Haz clic en ⮕ Render para crear el informe y obtener un archivo html
+
+## Ejercicio 3 (03-code-chunks)
+
+-   El primer chunk de código carga bibliotecas útiles. Asegúrese de que no aparecen advertencias ni mensajes en la salida html.
+-   No olvides volver a renderizar el archivo .qmd completo.
+
+## Ejercicio 4 (04-clean-figures)
+
+-   Descargue [esta imagen](https://github.com/allisonhorst/palmerpenguins?tab=readme-ov-file#bill-dimensions). Guardala en una nueva carpeta llamada en su "images" en el directorio "Quarto". Incluila en tu informe después de cargar el conjunto de datos. La ruta debe ser algo así como images/nombre-imagen.png.
+
+-   Use el `#| layout-ncol: 2` para crear un layout de 2 columnas. Calcule la longitud media del pico por especie y muestre el resultado a la izquierda. Haga lo mismo para la profundidad media del pico a la derecha.
+
+## Ejercicio 5 (05-clean-tables)
+
+-   Cambiar la metadata YAML por este y ver el cambio:
+
+---
+title: "Explorando la paradoja de Simpson's con el dataset de pingüinos"
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    toc-title: " "
+    number-sections: true
+editor: source
+fig-cap-location: margin
+---
+
+-   Utilice la librería `DT` para visualizar todos los datos del documento.
+-   Agregar la siguiente ecuación antes de las tablas:
+
+$${\displaystyle Media={\frac {1}{n}}\sum _{i=1}^{n}a_{i}={\frac {a_{1}+a_{2}+\cdots +a_{n}}{n}}}$$
+
+-   El informe muestra actualmente la longitud media del pico y la profundidad del pico por especie. Utilice la función `kable()` de la librería `kableExtra` para que las 2 tablas se vean bien.
+
+## Ejercicio 6 (06-interactive-charts)
+
+-   Reemplazar el gráfico por: 
+
+`datos %>%   
+   ggplot(aes(x = largo_pico_mm, y = alto_pico_mm)) +
+   geom_point(color = "#69b3a2") +
+   labs(x = "Largo pico (mm)",
+   y = "Alto pico (mm)",
+   title = paste("¿Relación sorpresiva?")) +
+   theme_ipsum()`
+   
+-   Utilice la librería `plotly` para convertir el primer gráfico de dispersión en interactivo utilizando la función `ggplotly()`.

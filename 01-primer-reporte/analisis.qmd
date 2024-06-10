@@ -1,0 +1,33 @@
+---
+title: "Análisis Pingüinos"
+format: html
+editor: visual
+---
+
+## Introducción
+
+Este es nuestro primer documento quarto. Por ahora incluye nuestro actual código de análisis de pingüinos a continuación:
+
+```{r}
+# cargar el tidyverse
+library(tidyverse)
+library(datos)
+
+# Funciones
+source("funciones.R")
+
+# Leer el conjunto de datos limpios
+datos <- pinguinos
+
+# Resumen
+summary(datos)
+
+# Calcular la longitud media del pico para diferentes especies e islas usando dplyr
+datos %>%
+  filter(especie == "Adelia") %>%
+  group_by(isla) %>%
+  summarize(media_largo_pico = round(mean(largo_pico_mm, na.rm = TRUE), 2))
+
+# Utilice la función en funciones.R
+crear_scatterplot(datos, "Adelia", "Torgersen")
+```
