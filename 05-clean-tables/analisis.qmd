@@ -1,5 +1,5 @@
 ---
-title: "Exploring the Simpson's Paradox Within the Penguin datosset"
+title: "Exploración de la paradoja de Simpson en el conjunto de datos Penguin"
 format:
   html:
     code-fold: true

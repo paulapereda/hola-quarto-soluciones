@@ -5,11 +5,13 @@ format: html
 editor: visual
 ---
 
+```{r}
 pkg_list <- c(
   "tidyverse", "hrbrthemes", "DT", "knitr", 
   "datos",  "plotly", "quarto")
   
 install.packages(pkg_list)
+```
 
 ## Ejercicio 1 (01-primer-reporte)
 
